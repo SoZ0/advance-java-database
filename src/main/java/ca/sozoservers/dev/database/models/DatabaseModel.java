@@ -65,7 +65,6 @@ public class DatabaseModel {
 
     public String getSQL(SqlValue type){
         if(!verifySQL()) createSQL();
-        System.out.println(verifySQL());
         switch (type) {
             case Delete:
                 return sqlDelete;
