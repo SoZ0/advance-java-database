@@ -65,7 +65,6 @@ public class DatabaseModel {
 
     public String getSQL(SqlValue type){
         if(!verifySQL()) createSQL();
-        System.out.println(verifySQL());
         switch (type) {
             case Delete:
                 return sqlDelete;
@@ -79,6 +78,27 @@ public class DatabaseModel {
                 return sqlUpdate;
         }
         return null;
+    }
+
+    public String toJSON(){
+        String json = new String("{\n");
+        Class<? extends DatabaseModel> clazz = this.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(DataType.class)) {
+                field.setAccessible(true);
+                String name = field.getName();
+                try {
+                    Object value = field.get(this);
+                    json += "\""+name+"\":\""+value+"\",\n";
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        json = json.substring(0, json.lastIndexOf(","));
+        json += "\n}";
+        return json;
     }
 
     @Target(ElementType.FIELD)

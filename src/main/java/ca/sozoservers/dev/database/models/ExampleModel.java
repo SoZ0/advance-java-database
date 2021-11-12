@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import ca.sozoservers.dev.database.models.DatabaseModel.*;
 
 @Table("server")
-public class ServerModel extends DatabaseModel {
+public class ExampleModel extends DatabaseModel {
 
     @Constraints("PRIMARY KEY")
     @DataType("INTERGER")
